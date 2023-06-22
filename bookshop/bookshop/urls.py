@@ -17,12 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from books.views import *
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('book/', include('books.urls')),
-    # path('booklist/', BooksAPIView.as_view()),
-    # path('book/<int:pk>/', BooksAPIUpdate.as_view()),
-    # path('booksdelete/<int:pk>/', BooksAPIDestroy.as_view()),
 ]
