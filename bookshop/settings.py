@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-cr@1avgs1zlqah7m#@kq5a=__7lxd2n1pvxk*#=^g%78+@h+yr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -76,10 +76,14 @@ WSGI_APPLICATION = 'bookshop.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+   	'default': {
+       		'ENGINE': 'django.db.backends.postgresql_psycopg2',
+       		 'NAME': 'books_db',
+       		 'USER': 'books_user',
+       		 'PASSWORD': '123',
+      		 'HOST': 'localhost',
+       		 'PORT': '',
+   	}
 }
 
 
@@ -123,3 +127,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+TEST_RUNNER = 'snapshottest.django.TestRunner'

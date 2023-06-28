@@ -4,7 +4,7 @@ from django.db import models
 class Books(models.Model):
     title = models.CharField(max_length=128)
     author = models.ManyToManyField('Author')
-    publisher = models.ManyToManyField('Publisher')
+    publisher = models.ForeignKey('Publisher', on_delete=models.PROTECT)
     price = models.DecimalField(max_digits=20, decimal_places=2)
     amount = models.PositiveIntegerField(default=0)
     time_create = models.DateTimeField(auto_now_add=True)
@@ -20,7 +20,7 @@ class Author(models.Model):
     middle_name = models.CharField(max_length=100, default='None')
 
     def __str__(self):
-        return self.first_name + " " + self.last_name
+        return f'{self.first_name} {self.last_name}'
 
 
 class Publisher(models.Model):
