@@ -1,3 +1,5 @@
+import os
+
 """
 Django settings for bookshop project.
 
@@ -79,8 +81,8 @@ DATABASES = {
    	'default': {
        		'ENGINE': 'django.db.backends.postgresql_psycopg2',
        		 'NAME': 'books_db',
-       		 'USER': 'books_user',
-       		 'PASSWORD': '123',
+       		 'USER': os.environ.get('DB_USER'),
+       		 'PASSWORD': os.environ.get('DB_PASS'),
       		 'HOST': 'localhost',
        		 'PORT': '',
    	}

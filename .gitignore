@@ -1,7 +1,5 @@
 *.py?
 
-*.pylintrc
-
 *.sqlite3
 
 .idea/

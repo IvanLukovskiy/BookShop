@@ -1,13 +1,19 @@
 version: '3'
 
 services:
-  postgres:
-    container_name: postgres
+  db:
+    container_name: testbdpostgres
     image: postgres:15
     environment:
+      POSTGRES_BD: books
       POSTGRES_USER: books_user
       POSTGRES_PASSWORD: 123
       PGDATA: /data/postgres
+    volumes:
+       pgdbdata:/var/lib/postgresql/data/
     ports:
-      - "5432:5432"
+       "54321:54321"
     restart: unless-stopped
+
+volumes:
+  pgdbdata:

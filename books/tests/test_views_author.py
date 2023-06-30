@@ -1,8 +1,6 @@
-# pylint:
 import json
 
 from django.urls import reverse
-from rest_framework.test import APITestCase
 from snapshottest.django import TestCase
 from rest_framework import status
 
@@ -17,21 +15,21 @@ class AuthorApiTestCase(TestCase):
     def test_author_get(self):
         url = reverse('author-list')
         response = self.client.get(url)
-        self.assertMatchSnapshot(response)
-        # self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertMatchSnapshot(response.json())
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_author_create(self):
         url = reverse('author-list')
         data = {
-            "first_name": "123",
-            "last_name": "456",
-            "middle_name": "879"
+            "first_name": "Author_2",
+            "last_name": "Novyi",
+            "middle_name": "Nooone"
         }
-        json_data = json.dumps(data)
-        response = self.client.post(url, data=json_data, content_type='application/json')
+        response = self.client.post(url, data=data, content_type='application/json')
+        self.assertMatchSnapshot(response.json())
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Author.objects.all().count(), 2)
-        self.assertEqual(Author.objects.all()[1].first_name, '123')
+        self.assertEqual(Author.objects.all()[1].first_name, 'Author_2')
 
     def test_author_update(self):
         url = reverse('author-detail', args=(self.author_1.id,))
@@ -40,8 +38,8 @@ class AuthorApiTestCase(TestCase):
             "last_name": 'Leontiev',
             "middle_name": self.author_1.middle_name,
         }
-        json_data = json.dumps(data)
-        response = self.client.put(url, data=json_data, content_type='application/json')
+        response = self.client.put(url, data=data, content_type='application/json')
+        self.assertMatchSnapshot(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Author.objects.all()[0].last_name, 'Leontiev')
 
