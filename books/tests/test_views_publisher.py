@@ -1,18 +1,18 @@
 import json
 
-from _decimal import Decimal
 from django.urls import reverse
 from snapshottest.django import TestCase
 from rest_framework import status
 
 from books.models import Publisher
+from books.tests.books_factory import PublisherFactory
 
 
 class PublisherApiTestCase(TestCase):
 
     def setUp(self):
-        self.publisher_1 = Publisher.objects.create(name='Самиздат')
-
+        # self.publisher_1 = Publisher.objects.create(name='Самиздат')
+        self.publisher_1 = PublisherFactory()
     def test_publisher_get(self):
         url = reverse('publisher-list')
         response = self.client.get(url)

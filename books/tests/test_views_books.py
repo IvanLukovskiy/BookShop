@@ -4,36 +4,47 @@ from django.urls import reverse
 from snapshottest.django import TestCase
 from rest_framework import status
 
-from books.models import Books, Author, Publisher
+from books.models import Books
+from books.tests.books_factory import BooksFactory, PublisherFactory, AuthorFactory
 
 
 class BooksApiTestCase(TestCase):
-
     def setUp(self):
-        self.author_1 = Author.objects.create(first_name='test_auth', last_name='1', middle_name='2')
-        self.publisher_1 = Publisher.objects.create(name='test_pub')
-        self.book_1 = Books.objects.create(
-            title='test_book',
-            price='25.00',
-            amount=3,
-            publisher=self.publisher_1,
-        )
-        self.book_1.author.add(self.author_1)
+        self.publisher_1 = PublisherFactory(name='test_pub')
+
+        self.author_1 = AuthorFactory.create(first_name='Albert',
+                                             last_name='Sysoev',
+                                             middle_name='Valentinovich')
+
+        self.book_1 = BooksFactory(title='setup_book_1',
+                                   price='25.00',
+                                   amount=76,
+                                   author=(self.author_1,),
+                                   publisher=self.publisher_1
+                                   )
 
     def test_book_get(self):
         url = reverse('books-list')
-        response = self.client.get(url)
-        self.assertMatchSnapshot(response.json())
+        data = {
+            "title": 'setup_book',
+            "price": '25.00',
+            "amount": 70,
+            "author": [1],
+            "publisher": 1,
+        }
+        response = self.client.get(url, data=data, content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertMatchSnapshot(response.json())
 
     def test_book_create(self):
         url = reverse('books-list')
+        z = Books.objects.get(title='setup_book_1')
         data = {
             "title": 'Колобок',
             "price": '125.00',
             "amount": 5,
-            "author": [1],
-            "publisher": 1,
+            "author": [z.author.get(first_name='Albert').id],
+            "publisher": self.book_1.publisher.id,
         }
         response = self.client.post(url, data=data, content_type='application/json')
         self.assertMatchSnapshot(response.json())
@@ -42,14 +53,13 @@ class BooksApiTestCase(TestCase):
 
     def test_book_update(self):
         url = reverse('books-detail', args=(self.book_1.id,))
+        z = Books.objects.get(title='setup_book_1')
         data = {
             "title": self.book_1.title,
             "price": '333.00',
             "amount": self.book_1.amount,
-            "author": self.book_1.author.all(),
-            "publisher": self.publisher_1,
-            # "publisher": self.book_1.publisher,
-            # "publisher": Publisher.objects.all()[0],
+            "author": [z.author.get(first_name='Albert').id],
+            "publisher": self.book_1.publisher.id,
         }
         response = self.client.put(url, data=data, content_type='application/json')
         self.assertMatchSnapshot(response.json())

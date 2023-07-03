@@ -15,7 +15,7 @@ snapshots['PublisherApiTestCase::test_publisher_create 1'] = {
 snapshots['PublisherApiTestCase::test_publisher_get 1'] = [
     {
         'id': 8,
-        'name': 'Самиздат'
+        'name': 'test_pub'
     }
 ]
 

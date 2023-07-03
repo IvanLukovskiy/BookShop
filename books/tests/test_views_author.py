@@ -5,12 +5,14 @@ from snapshottest.django import TestCase
 from rest_framework import status
 
 from books.models import Author
+from books.tests.books_factory import AuthorFactory
 
 
 class AuthorApiTestCase(TestCase):
 
     def setUp(self):
-        self.author_1 = Author.objects.create(first_name='Biba', last_name='Prigojin', middle_name='Lvovich')
+        # self.author_1 = Author.objects.create(first_name='Biba', last_name='Prigojin', middle_name='Lvovich')
+        self.author_1 = AuthorFactory()
 
     def test_author_get(self):
         url = reverse('author-list')

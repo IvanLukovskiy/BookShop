@@ -16,16 +16,16 @@ snapshots['AuthorApiTestCase::test_author_create 1'] = {
 
 snapshots['AuthorApiTestCase::test_author_get 1'] = [
     {
-        'first_name': 'Biba',
+        'first_name': 'Albert',
         'id': 4,
-        'last_name': 'Prigojin',
-        'middle_name': 'Lvovich'
+        'last_name': 'Sysoev',
+        'middle_name': 'Valentinovich'
     }
 ]
 
 snapshots['AuthorApiTestCase::test_author_update 1'] = {
-    'first_name': 'Biba',
+    'first_name': 'Albert',
     'id': 5,
     'last_name': 'Leontiev',
-    'middle_name': 'Lvovich'
+    'middle_name': 'Valentinovich'
 }
