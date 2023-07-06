@@ -17,7 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from bookshop.yasg import urlpatterns as doc_urls
+
+admin.site.site_header = 'Админка BookShop'
+admin.site.index_title = 'Админка'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('book/', include('books.urls')),
 ]
+
+urlpatterns += doc_urls

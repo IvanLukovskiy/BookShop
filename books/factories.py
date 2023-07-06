@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import factory
 from factory.django import DjangoModelFactory
 
@@ -27,9 +29,9 @@ class BooksFactory(DjangoModelFactory):
     title = 'test_book'
     price = '25.00'
     amount = 30
+    # time_create = factory.LazyFunction(datetime.now)
+    # time_update = factory.LazyFunction(datetime.now)
     publisher = factory.SubFactory(PublisherFactory)
-
-    # author = factory.SubFactory(AuthorFactory)
 
     @factory.post_generation
     def author(self, create, extracted, **kwargs):

@@ -4,15 +4,16 @@ services:
   db:
     container_name: testbdpostgres
     image: postgres:15
+    env_file: .env
     environment:
-      POSTGRES_BD: books
-      POSTGRES_USER: books_user
-      POSTGRES_PASSWORD: 123
-      PGDATA: /data/postgres
+      - POSTGRES_BD=${POSTGRES_BD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - PGDATA=${PGDATA}
     volumes:
-       pgdbdata:/var/lib/postgresql/data/
+      - pgdbdata:/var/lib/postgresql/data/
     ports:
-       "54321:54321"
+      - 54321:54321
     restart: unless-stopped
 
 volumes:

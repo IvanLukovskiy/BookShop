@@ -1,21 +1,24 @@
-import json
-
 from django.urls import reverse
 from snapshottest.django import TestCase
 from rest_framework import status
 
 from books.models import Author
-from books.tests.books_factory import AuthorFactory
+from books.factories import AuthorFactory
 
 
 class AuthorApiTestCase(TestCase):
 
     def setUp(self):
-        # self.author_1 = Author.objects.create(first_name='Biba', last_name='Prigojin', middle_name='Lvovich')
         self.author_1 = AuthorFactory()
 
-    def test_author_get(self):
+    def test_author_get_list(self):
         url = reverse('author-list')
+        response = self.client.get(url)
+        self.assertMatchSnapshot(response.json())
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_author_retrieve_elem(self):
+        url = reverse('author-detail', args=(self.author_1.id,))
         response = self.client.get(url)
         self.assertMatchSnapshot(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -44,6 +47,16 @@ class AuthorApiTestCase(TestCase):
         self.assertMatchSnapshot(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Author.objects.all()[0].last_name, 'Leontiev')
+
+    def test_author_partial_update(self):
+        url = reverse('author-detail', args=(self.author_1.id,))
+        data = {
+            "first_name": "Maximus",
+        }
+        response = self.client.patch(url, data=data, content_type='application/json')
+        self.assertMatchSnapshot(response.json())
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(Author.objects.all()[0].first_name, 'Maximus')
 
     def test_author_delete(self):
         url = reverse('author-detail', args=(self.author_1.id,))

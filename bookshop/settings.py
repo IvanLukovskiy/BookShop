@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-cr@1avgs1zlqah7m#@kq5a=__7lxd2n1pvxk*#=^g%78+@h+yr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'books.apps.BooksConfig',
+    'user.apps.UserConfig',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -80,10 +82,10 @@ WSGI_APPLICATION = 'bookshop.wsgi.application'
 DATABASES = {
    	'default': {
        		'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       		 'NAME': 'books_db',
+       		 'NAME': os.environ.get('DB_NAME'),
        		 'USER': os.environ.get('DB_USER'),
        		 'PASSWORD': os.environ.get('DB_PASS'),
-      		 'HOST': 'localhost',
+      		 'HOST': os.environ.get('DB_HOST'),
        		 'PORT': '',
    	}
 }

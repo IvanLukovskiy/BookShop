@@ -14,7 +14,7 @@ snapshots['AuthorApiTestCase::test_author_create 1'] = {
     'middle_name': 'Nooone'
 }
 
-snapshots['AuthorApiTestCase::test_author_get 1'] = [
+snapshots['AuthorApiTestCase::test_author_get_list 1'] = [
     {
         'first_name': 'Albert',
         'id': 4,
@@ -23,9 +23,23 @@ snapshots['AuthorApiTestCase::test_author_get 1'] = [
     }
 ]
 
+snapshots['AuthorApiTestCase::test_author_partial_update 1'] = {
+    'first_name': 'Maximus',
+    'id': 5,
+    'last_name': 'Sysoev',
+    'middle_name': 'Valentinovich'
+}
+
+snapshots['AuthorApiTestCase::test_author_retrieve_elem 1'] = {
+    'first_name': 'Albert',
+    'id': 6,
+    'last_name': 'Sysoev',
+    'middle_name': 'Valentinovich'
+}
+
 snapshots['AuthorApiTestCase::test_author_update 1'] = {
     'first_name': 'Albert',
-    'id': 5,
+    'id': 7,
     'last_name': 'Leontiev',
     'middle_name': 'Valentinovich'
 }

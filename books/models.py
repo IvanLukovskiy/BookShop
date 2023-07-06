@@ -1,12 +1,15 @@
 from django.db import models
+from django.core.validators import MinValueValidator
 
 
 class Books(models.Model):
     title = models.CharField(max_length=128)
     author = models.ManyToManyField('Author')
     publisher = models.ForeignKey('Publisher', on_delete=models.PROTECT)
-    price = models.DecimalField(max_digits=20, decimal_places=2)
-    amount = models.PositiveIntegerField(default=0)
+    price = models.DecimalField(max_digits=20, decimal_places=2,
+                                validators=[MinValueValidator(0)])
+    amount = models.PositiveIntegerField(default=0,
+                                         validators=[MinValueValidator(0)])
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
 

@@ -1,20 +1,24 @@
-import json
-
 from django.urls import reverse
 from snapshottest.django import TestCase
 from rest_framework import status
 
 from books.models import Publisher
-from books.tests.books_factory import PublisherFactory
+from books.factories import PublisherFactory
 
 
 class PublisherApiTestCase(TestCase):
 
     def setUp(self):
-        # self.publisher_1 = Publisher.objects.create(name='Самиздат')
         self.publisher_1 = PublisherFactory()
-    def test_publisher_get(self):
+
+    def test_publisher_get_list(self):
         url = reverse('publisher-list')
+        response = self.client.get(url)
+        self.assertMatchSnapshot(response.json())
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_publisher_retrieve_elem(self):
+        url = reverse('publisher-detail', args=(self.publisher_1.id,))
         response = self.client.get(url)
         self.assertMatchSnapshot(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -36,6 +40,16 @@ class PublisherApiTestCase(TestCase):
             "name": "ТестИздат",
         }
         response = self.client.put(url, data=data, content_type='application/json')
+        self.assertMatchSnapshot(response.json())
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(Publisher.objects.all()[0].name, 'ТестИздат')
+
+    def test_publisher_partial_update(self):
+        url = reverse('publisher-detail', args=(self.publisher_1.id,))
+        data = {
+            "name": "ТестИздат",
+        }
+        response = self.client.patch(url, data=data, content_type='application/json')
         self.assertMatchSnapshot(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Publisher.objects.all()[0].name, 'ТестИздат')
