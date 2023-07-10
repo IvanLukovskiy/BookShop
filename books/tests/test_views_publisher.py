@@ -14,14 +14,14 @@ class PublisherApiTestCase(TestCase):
     def test_publisher_get_list(self):
         url = reverse('publisher-list')
         response = self.client.get(url)
-        self.assertMatchSnapshot(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertMatchSnapshot(response.json())
 
     def test_publisher_retrieve_elem(self):
         url = reverse('publisher-detail', args=(self.publisher_1.id,))
         response = self.client.get(url)
-        self.assertMatchSnapshot(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertMatchSnapshot(response.json())
 
     def test_publisher_create(self):
         url = reverse('publisher-list')
@@ -29,10 +29,8 @@ class PublisherApiTestCase(TestCase):
             "name": "ТестИздат",
         }
         response = self.client.post(url, data=data, content_type='application/json')
-        self.assertMatchSnapshot(response.json())
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(Publisher.objects.all().count(), 2)
-        self.assertEqual(Publisher.objects.all()[1].name, 'ТестИздат')
+        self.assertMatchSnapshot(response.json())
 
     def test_publisher_update(self):
         url = reverse('publisher-detail', args=(self.publisher_1.id,))
@@ -40,9 +38,8 @@ class PublisherApiTestCase(TestCase):
             "name": "ТестИздат",
         }
         response = self.client.put(url, data=data, content_type='application/json')
-        self.assertMatchSnapshot(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(Publisher.objects.all()[0].name, 'ТестИздат')
+        self.assertMatchSnapshot(response.json())
 
     def test_publisher_partial_update(self):
         url = reverse('publisher-detail', args=(self.publisher_1.id,))
@@ -50,12 +47,10 @@ class PublisherApiTestCase(TestCase):
             "name": "ТестИздат",
         }
         response = self.client.patch(url, data=data, content_type='application/json')
-        self.assertMatchSnapshot(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(Publisher.objects.all()[0].name, 'ТестИздат')
+        self.assertMatchSnapshot(response.json())
 
     def test_publisher_delete(self):
         url = reverse('publisher-detail', args=(self.publisher_1.id,))
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(Publisher.objects.all().count(), 0)

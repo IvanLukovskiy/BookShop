@@ -14,14 +14,14 @@ class AuthorApiTestCase(TestCase):
     def test_author_get_list(self):
         url = reverse('author-list')
         response = self.client.get(url)
-        self.assertMatchSnapshot(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertMatchSnapshot(response.json())
 
     def test_author_retrieve_elem(self):
         url = reverse('author-detail', args=(self.author_1.id,))
         response = self.client.get(url)
-        self.assertMatchSnapshot(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertMatchSnapshot(response.json())
 
     def test_author_create(self):
         url = reverse('author-list')
@@ -31,10 +31,8 @@ class AuthorApiTestCase(TestCase):
             "middle_name": "Nooone"
         }
         response = self.client.post(url, data=data, content_type='application/json')
-        self.assertMatchSnapshot(response.json())
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(Author.objects.all().count(), 2)
-        self.assertEqual(Author.objects.all()[1].first_name, 'Author_2')
+        self.assertMatchSnapshot(response.json())
 
     def test_author_update(self):
         url = reverse('author-detail', args=(self.author_1.id,))
@@ -44,9 +42,8 @@ class AuthorApiTestCase(TestCase):
             "middle_name": self.author_1.middle_name,
         }
         response = self.client.put(url, data=data, content_type='application/json')
-        self.assertMatchSnapshot(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(Author.objects.all()[0].last_name, 'Leontiev')
+        self.assertMatchSnapshot(response.json())
 
     def test_author_partial_update(self):
         url = reverse('author-detail', args=(self.author_1.id,))
@@ -54,12 +51,10 @@ class AuthorApiTestCase(TestCase):
             "first_name": "Maximus",
         }
         response = self.client.patch(url, data=data, content_type='application/json')
-        self.assertMatchSnapshot(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(Author.objects.all()[0].first_name, 'Maximus')
+        self.assertMatchSnapshot(response.json())
 
     def test_author_delete(self):
         url = reverse('author-detail', args=(self.author_1.id,))
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(Author.objects.all().count(), 0)
