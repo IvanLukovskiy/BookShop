@@ -11,12 +11,13 @@ from books.factories import BooksFactory, PublisherFactory, AuthorFactory
 @freeze_time("2023-07-25  01:02:00")
 class BooksApiTestCase(TestCase):
     def setUp(self):
-        self.book_1 = BooksFactory(title='setup_book_1',
-                                   price='25.00',
-                                   amount=76,
-                                   author=(AuthorFactory.create(),),
-                                   publisher=PublisherFactory()
-                                   )
+        self.book_1 = BooksFactory(
+            title='setup_book_1',
+            price='25.00',
+            amount=76,
+            author=(AuthorFactory.create(),),
+            publisher=PublisherFactory()
+        )
 
     def test_book_get_list(self):
         url = reverse('books-list')

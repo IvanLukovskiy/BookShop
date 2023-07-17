@@ -17,4 +17,3 @@ class AuthorViewSet(viewsets.ModelViewSet):
 class PublisherViewSet(viewsets.ModelViewSet):
     queryset = Publisher.objects.all()
     serializer_class = PublisherSerializer
-
