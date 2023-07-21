@@ -126,9 +126,9 @@ EMAIL_USE_SSL = True
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
 
-EMAIL_HOST_USER = 'lukovskij.vania@yandex.ru'
-EMAIL_HOST_PASSWORD = 'ksotcqrhoqwhkmzg'
-DEFAULT_FROM_EMAIL = 'lukovskij.vania@yandex.ru'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
