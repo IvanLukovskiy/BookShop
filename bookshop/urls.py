@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
+from rest_framework.authtoken.views import obtain_auth_token
 
 from bookshop.yasg import urlpatterns as doc_urls
 
@@ -26,7 +27,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('book/', include('books.urls')),
     path('user/', include('user.urls')),
-    path('book/auth/', include('djoser.urls')),
+    # path('auth/', obtain_auth_token),
+    path('auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
 ]
 

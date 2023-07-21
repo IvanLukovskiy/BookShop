@@ -26,10 +26,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'books.apps.BooksConfig',
     'user.apps.UserConfig',
     'drf_yasg',
-    'rest_framework.authtoken',
     'djoser',
 ]
 
@@ -119,6 +119,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 TEST_RUNNER = 'snapshottest.django.TestRunner'
 
 AUTH_USER_MODEL = 'user.CustomUser'
+
+# smtp
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+
+EMAIL_HOST_USER = 'lukovskij.vania@yandex.ru'
+EMAIL_HOST_PASSWORD = 'ksotcqrhoqwhkmzg'
+DEFAULT_FROM_EMAIL = 'lukovskij.vania@yandex.ru'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

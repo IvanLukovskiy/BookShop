@@ -5,8 +5,8 @@ from books.views import BooksViewSet, AuthorViewSet, PublisherViewSet
 
 router = routers.DefaultRouter()
 router.register(r'books', BooksViewSet)
-router.register(r'author', AuthorViewSet)
-router.register(r'publisher', PublisherViewSet)
+router.register(r'authors', AuthorViewSet)
+router.register(r'publishers', PublisherViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

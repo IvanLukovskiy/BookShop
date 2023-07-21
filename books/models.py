@@ -1,5 +1,9 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.core.validators import MinValueValidator
+
+
 
 
 class Books(models.Model):
@@ -12,6 +16,7 @@ class Books(models.Model):
                                          validators=[MinValueValidator(0)])
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.title

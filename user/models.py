@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 from user.choices import UserStatChoice, PaymentStatus
+
 from books.models import Books
 
 
@@ -11,6 +12,10 @@ class CustomUser(AbstractUser):
         blank=True,
         null=True,
         max_length=150)
+    status = models.CharField(
+        choices=UserStatChoice.choices,
+        default=UserStatChoice.CUSTOMER
+    )
     REQUIRED_FIELDS = ['username']
     USERNAME_FIELD = 'email'
 
