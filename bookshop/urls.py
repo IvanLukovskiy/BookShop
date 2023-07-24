@@ -27,7 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('book/', include('books.urls')),
     path('user/', include('user.urls')),
-    # path('auth/', obtain_auth_token),
+    path('auth/', include('rest_framework.urls')),
     path('auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
 ]

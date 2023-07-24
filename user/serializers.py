@@ -10,6 +10,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
+    creator = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
     class Meta:
         model = Order
         fields = '__all__'

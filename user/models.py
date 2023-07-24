@@ -1,8 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.conf import settings
 
 from user.choices import UserStatChoice, PaymentStatus
-
 from books.models import Books
 
 
@@ -30,6 +30,7 @@ class Order(models.Model):
         choices=PaymentStatus.choices,
         default=PaymentStatus.NOT_PAID
     )
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
 
 
 class OrderItems(models.Model):
