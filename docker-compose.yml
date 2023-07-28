@@ -1,19 +1,29 @@
 version: '3'
 
 services:
+  web-app:
+    build:
+      context: .
+    container_name: books_app
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    env_file:
+      - ./.env
+    command: bash entrypoint.sh
+    depends_on:
+      - db
+
   db:
-    container_name: testbdpostgres
     image: postgres:15
-    env_file: .env
-    environment:
-      - POSTGRES_BD=${POSTGRES_BD}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - PGDATA=${PGDATA}
+    container_name: books_db
+    env_file:
+      - ./.env
     volumes:
       - pgdbdata:/var/lib/postgresql/data/
     ports:
-      - 54321:54321
+      - "5435:5432"
     restart: unless-stopped
 
 volumes:
